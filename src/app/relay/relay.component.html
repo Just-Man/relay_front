@@ -1,0 +1,15 @@
+<div id="relay_board">
+  <div class="relay" *ngFor="let relay of relays" >
+    <form>
+      <h2>{{ relay.title }}</h2>
+      <h3>{{ relay.status }}</h3>
+      <div>
+        <label class="toggle col-sm-8">
+          <input type="checkbox" [(ngModel)]="relay.status">
+          <span class="handle" style="top:0 !important"></span>
+        </label>
+      </div>
+      <button></button>
+    </form>
+  </div>
+</div>
