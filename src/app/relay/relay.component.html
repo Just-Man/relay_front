@@ -1,8 +1,8 @@
+<h1 id="username"> Welcome {{ username }}</h1>
 <div id="relay_board">
   <div class="relay" *ngFor="let relay of relays" >
     <form>
       <h2>{{ relay.title }}</h2>
-      <h3>{{ relay.status }}</h3>
       <div>
         <label class="toggle col-sm-8">
           <input type="checkbox" [(ngModel)]="relay.status">

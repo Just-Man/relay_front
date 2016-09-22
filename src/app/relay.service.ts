@@ -10,7 +10,7 @@ export class RelayService {
   getStatus()
   {
     var path = '/status';
-    return this.transferService.getRequest(path)
+    return this.transferService.getRequest(path, false)
   }
 
   setRelay (data)

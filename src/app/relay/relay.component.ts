@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RelayService } from '../relay.service';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 
+
 @Component({
   moduleId: module.id,
   selector: 'app-relay',
@@ -12,16 +13,15 @@ import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 })
 export class RelayComponent implements OnInit {
   relays;
-  relays1;
+  username;
 
   constructor(private relaysService: RelayService) { }
 
   ngOnInit() {
     this.relaysService.getStatus()
-      .subscribe(res => {return this.relays = res.data});
-
-    console.log(this.relays);
+      .subscribe(res => {
+        this.relays = res;
+        this.username = res.username;
+      });
   }
-
-
 }
