@@ -14,20 +14,19 @@ export class LoginService
 
     var
       path = '/login',
-      data = JSON.stringify(
+      data =
       {
         username: username,
         password: password
-      }
-    );
+      };
 
-    this.transferService.postRequest(data,path);
+    this.transferService.postRequest(data,path, true);
   }
-  
+
   logout()
   {
     var path = '/logout';
-    return this.transferService.getRequest(path);
+    return this.transferService.getRequest(path, true);
   }
 
 }

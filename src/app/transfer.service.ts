@@ -2,7 +2,7 @@
  * Created by just on 19.09.16.
  */
 import {Injectable}     from '@angular/core';
-import {Headers, Http, Response} from '@angular/http';
+import {Headers, Http, Response, RequestOptions} from '@angular/http';
 import {Router} from '@angular/router';
 import {Observable} from "rxjs/Rx";
 import globals = require('./globals');
@@ -19,19 +19,19 @@ export class TransferService
   {
   }
 
-  postRequest(data, path)
+  postRequest(data, path, save)
   {
     var
       url,
       headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    let options = new RequestOptions({ headers: headers, method: "post" });
 
     url = globals.url + path;
-
-    this.http.post(url, data, {headers: headers})
+    this.http.post(url, data, options)
       .map(res => res.json())
       .subscribe(
-        data => this.validateData(data, true),
+        data => this.validateData(data, save),
         error => console.log(error)
       );
   }
@@ -43,7 +43,7 @@ export class TransferService
     }
 
     if (data.error) {
-      this.handleErrorGet(data.error);
+      TransferService.handleErrorGet(data.error);
     }
 
     if (save) {
@@ -76,31 +76,35 @@ export class TransferService
           return res.json()
         }
       )
-      .map(res =>
+      .map((result) =>
       {
+        var res = this.validateData(result, save);
         if (typeof res == 'object') {
           var i,
               relay = [],
-              relayNumber,
-              result = [],
+              resultArray,
               len = Object.keys(res.data).length;
+
+          if (typeof resultArray == 'undefined') {
+            resultArray = [];
+          }
+
           for (i = 0; i < len; i += 1) {
-            relayNumber = 'relay' + (i + 1);
-            result.push(res.data[relayNumber]);
+            resultArray.push(res.data[i]);
             relay = [];
           }
 
-          result['username'] = res.user[1];
-          return result;
+          resultArray['username'] = res.user[1];
+          return resultArray;
         }
       })
-      .catch(this.handleErrorGet);
+      .catch(TransferService.handleErrorGet);
   }
 
-  private handleErrorGet(error:any)
+  private static handleErrorGet(error)
   {
     console.error(error);
-    return Observable.throw(error.json().error || 'Server error');
+    return Observable.throw(error.error || 'Server error');
   }
 
 }

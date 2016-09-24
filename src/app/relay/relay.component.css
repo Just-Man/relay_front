@@ -2,7 +2,7 @@
 {
   margin: 200px auto;
   width: 80%;
-  background: #fff;
+  background: rgba(0, 0, 0, 0.50);
   padding: 10px;
   display: flex;
   justify-content: space-around;
@@ -11,11 +11,26 @@
 
 .relay {
   margin: 15px 10px;
-  min-width: 100px;
-  height: 200px;
-  background: #ccc;
+  min-width: 80px;
+  height: 150px;
+  background: radial-gradient(rgb(105, 105, 105) 8%, #fff);
   padding: 15px;
-  flex-basis: 12%;
+  flex-basis: 7%;
+  border: 1px solid #000;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.relayForm{
+  text-align: center;
+}
+
+.openModal{
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  margin-top: 10px;
 }
 /**
  * toggle
@@ -35,13 +50,11 @@
 }
 .toggle .handle {
   position: relative;
-  top: -20px;
-  left: 0;
-
+  margin: -20px auto 0;
   display: block;
-  width: 50px;
+  width: 70px;
   height: 32px;
-  background-color: white;
+  background-color: #f00;
   border-radius: 19px;
   -webkit-box-shadow: inset 0 0 0 1px #b8bfc8;
   -moz-box-shadow: inset 0 0 0 1px #b8bfc8;
@@ -79,13 +92,12 @@
 }
 .toggle input[type="checkbox"]:checked + .handle:before, .toggle input[type="radio"]:checked + .handle:before {
   width: 70px;
-  background-color: #a0d468;
-  content : "On";
+  background-color: #0f0;
 }
 .toggle input[type="checkbox"]:checked + .handle:after, .toggle input[type="radio"]:checked + .handle:after {
   left: 40px;
   content: "";
-  color: green;
+  color: lime;
   -webkit-box-shadow: inset 0 0 0 1px #f5f7fa, 1px 1px 1px #c7ccd3;
   -moz-box-shadow: inset 0 0 0 1px #f5f7fa, 1px 1px 1px #c7ccd3;
   box-shadow: inset 0 0 0 1px #f5f7fa, 1px 1px 1px #c7ccd3;

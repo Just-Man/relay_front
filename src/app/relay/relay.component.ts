@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { RelayService } from '../relay.service';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-
+import {Component, OnInit} from '@angular/core';
+import {RelayService} from '../relay.service';
+import {ROUTER_DIRECTIVES} from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -9,19 +8,31 @@ import { ROUTER_DIRECTIVES, Router } from '@angular/router';
   templateUrl: 'relay.component.html',
   styleUrls: ['relay.component.css'],
   directives: [ROUTER_DIRECTIVES],
-  providers: [ RelayService ]
+  providers: [RelayService]
 })
-export class RelayComponent implements OnInit {
+export class RelayComponent implements OnInit
+{
   relays;
   username;
 
-  constructor(private relaysService: RelayService) { }
+  constructor(private relaysService:RelayService)
+  {
+  }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.relaysService.getStatus()
-      .subscribe(res => {
-        this.relays = res;
+      .subscribe(res =>
+      {
+        this.relays   = res;
         this.username = res.username;
       });
+  }
+
+  changeRelayStatus(recipient)
+  {
+    recipient.status = !recipient.status;
+
+    this.relaysService.setRelay(recipient)
   }
 }

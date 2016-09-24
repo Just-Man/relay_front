@@ -13,10 +13,13 @@ export class RelayService {
     return this.transferService.getRequest(path, false)
   }
 
-  setRelay (data)
+  setRelay (relays)
   {
     var
-      path = '/set';
-    this.transferService.postRequest(data, path)
+      path = '/set',
+      token = localStorage.getItem('token'),
+      data = "relay=" + JSON.stringify(relays) +  "&token=" + JSON.stringify(token);
+
+    this.transferService.postRequest(data, path, false)
   }
 }
