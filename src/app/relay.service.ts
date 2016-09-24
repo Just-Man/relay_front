@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { TransferService} from './transfer.service'
-
+import { TransferService } from './transfer.service'
 
 @Injectable()
-export class RelayService {
+export class RelayService
+{
 
-  constructor(private transferService: TransferService) { }
+  constructor(private transferService:TransferService)
+  {
+  }
 
   getStatus()
   {
@@ -13,12 +15,12 @@ export class RelayService {
     return this.transferService.getRequest(path, false)
   }
 
-  setRelay (relays)
+  setRelay(relays)
   {
     var
-      path = '/set',
+      path  = '/set',
       token = localStorage.getItem('token'),
-      data = "relay=" + JSON.stringify(relays) +  "&token=" + JSON.stringify(token);
+      data  = "relay=" + JSON.stringify(relays) + "&token=" + JSON.stringify(token);
 
     this.transferService.postRequest(data, path, false)
   }

@@ -1,15 +1,16 @@
 /**
  * Created by just on 19.09.16.
  */
-import {Injectable}     from '@angular/core';
-import {Headers, Http, Response, RequestOptions} from '@angular/http';
-import {Router} from '@angular/router';
-import {Observable} from "rxjs/Rx";
+import { Injectable }     from '@angular/core';
+import { Headers, Http, Response, RequestOptions } from '@angular/http';
+import { Router } from '@angular/router';
+import { Observable } from "rxjs/Rx";
 import globals = require('./globals');
 import 'rxjs/add/operator/map'
 import 'rxjs/Rx'
 
 @Injectable()
+
 export class TransferService
 {
 
@@ -30,10 +31,11 @@ export class TransferService
     url = globals.url + path;
     this.http.post(url, data, options)
       .map(res => res.json())
+      .catch(this.handleErrorGet)
       .subscribe(
         data => this.validateData(data, save),
-        error => console.log(error)
-      );
+        error => console.log(this.handleErrorGet(error))
+      )
   }
 
   validateData(data, save)
@@ -43,7 +45,7 @@ export class TransferService
     }
 
     if (data.error) {
-      TransferService.handleErrorGet(data.error);
+      this.handleErrorGet(data.error);
     }
 
     if (save) {
@@ -83,7 +85,7 @@ export class TransferService
           var i,
               relay = [],
               resultArray,
-              len = Object.keys(res.data).length;
+              len   = Object.keys(res.data).length;
 
           if (typeof resultArray == 'undefined') {
             resultArray = [];
@@ -98,12 +100,12 @@ export class TransferService
           return resultArray;
         }
       })
-      .catch(TransferService.handleErrorGet);
+      .catch(this.handleErrorGet);
   }
 
-  private static handleErrorGet(error)
+  private handleErrorGet(error)
   {
-    console.error(error);
+    // console.error(error);
     return Observable.throw(error.error || 'Server error');
   }
 

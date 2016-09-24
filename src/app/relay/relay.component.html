@@ -1,4 +1,4 @@
-<h1 id="username"> Welcome {{ username }}</h1>
+<h1 id="username"> Welcome {{ username }}<button class="logout" (click)="logout()">Logout</button></h1>
 <div id="relay_board">
   <div class="relay" *ngFor="let relay of relays" >
     <form class="relayForm">

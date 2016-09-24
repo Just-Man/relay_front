@@ -1,11 +1,12 @@
 import { Injectable }     from '@angular/core';
 import { TransferService } from './transfer.service'
+import { Router } from "@angular/router";
 
 @Injectable()
 export class LoginService
 {
 
-  constructor(private transferService: TransferService)
+  constructor(private transferService: TransferService, private router: Router)
   {
   }
 
@@ -25,8 +26,8 @@ export class LoginService
 
   logout()
   {
-    var path = '/logout';
-    return this.transferService.getRequest(path, true);
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 
 }

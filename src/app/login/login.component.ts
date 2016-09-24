@@ -3,12 +3,12 @@ import { LoginService } from '../login.service';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 
 @Component({
-  moduleId: module.id,
-  selector: 'app-login',
+  moduleId   : module.id,
+  selector   : 'app-login',
   templateUrl: 'login.component.html',
-  styleUrls: ['login.component.css'],
-  directives: [ROUTER_DIRECTIVES],
-  providers: [LoginService]
+  styleUrls  : ['login.component.css'],
+  directives : [ROUTER_DIRECTIVES],
+  providers  : [LoginService]
 })
 export class LoginComponent
 {
@@ -16,9 +16,12 @@ export class LoginComponent
   username;
   password;
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService:LoginService, private router:Router)
+  {
+  }
 
-  login(){
+  login()
+  {
     this.loginService.login(this.username, this.password)
   }
 }
