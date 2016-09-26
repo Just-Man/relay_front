@@ -15,6 +15,9 @@ const routes: RouterConfig = [
     path: 'status',
     component: RelayComponent
   },
+  { path: "**",
+    redirectTo:''
+  }
 ];
 
 export const appRouterProviders = [

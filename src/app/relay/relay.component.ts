@@ -42,7 +42,7 @@ export class RelayComponent implements OnInit
 
     this.relaysService.setRelay(recipient)
   }
-  
+
   openTimersModal()
   {
 

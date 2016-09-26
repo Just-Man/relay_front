@@ -1,0 +1,15 @@
+body {
+  background: url("background.jpg") no-repeat;
+  background-size: 100% 120%;
+}
+
+h2{
+  margin: 0;
+    display: block;
+    font-size: 1.5em;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    font-weight: bold;
+}
