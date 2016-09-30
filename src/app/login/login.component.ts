@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../login.service';
+import { UserService } from '../service/user.service';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 
 @Component({
@@ -8,20 +8,28 @@ import { ROUTER_DIRECTIVES, Router } from '@angular/router';
   templateUrl: 'login.component.html',
   styleUrls  : ['login.component.css'],
   directives : [ROUTER_DIRECTIVES],
-  providers  : [LoginService]
+  providers  : [UserService]
 })
 export class LoginComponent
 {
   welcome = "Welcome";
+ 
   username;
   password;
+  error;
 
-  constructor(private loginService:LoginService, private router:Router)
+  constructor(private loginService:UserService, private router: Router)
   {
   }
 
   login()
   {
     this.loginService.login(this.username, this.password)
+      .subscribe(res => {
+        if (res.user) {
+          this.router.navigate(['/status'])
+        }
+        this.error = res.error;
+      });
   }
 }

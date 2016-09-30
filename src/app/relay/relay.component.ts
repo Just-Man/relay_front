@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RelayService } from '../relay.service';
+import { RelayService } from '../service/relay.service';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-import { LoginService } from "../login.service";
+import { UserService } from "../service/user.service";
 
 @Component({
   moduleId   : module.id,
@@ -9,15 +9,21 @@ import { LoginService } from "../login.service";
   templateUrl: 'relay.component.html',
   styleUrls  : ['relay.component.css'],
   directives : [ROUTER_DIRECTIVES],
-  providers  : [RelayService]
+  providers  : [RelayService],
 })
 
 export class RelayComponent implements OnInit
 {
   relays;
-  username;
+  username:(string);
+  is_admin:(number);
+  relayModal;
+  errorMsg;
+  seconds;
 
-  constructor(private relaysService:RelayService, private loginService:LoginService, private router:Router)
+  constructor(private relaysService:RelayService,
+              private userService:UserService,
+              private router:Router)
   {
   }
 
@@ -28,10 +34,15 @@ export class RelayComponent implements OnInit
         {
           this.relays   = res;
           this.username = res.username;
-        },
-        error =>
-        {
-          this.router.navigate(['/'])
+          this.is_admin = res.admin;
+          if (res.error) {
+            this.errorMsg = res.error;
+            var router    = this.router;
+            setTimeout(function ()
+            {
+              router.navigate(['/']);
+            }, 10000)
+          }
         }
       );
   }
@@ -41,15 +52,32 @@ export class RelayComponent implements OnInit
     recipient.status = !recipient.status;
 
     this.relaysService.setRelay(recipient)
+      .subscribe(res =>
+      {
+      });
   }
 
-  openTimersModal()
+  setRelayTimers(recipient)
+  {
+    this.relaysService.setRelay(recipient)
+      .subscribe(res =>
+      {
+        this.relays = res;
+      });
+  }
+
+  openTimersModal(data)
+  {
+    this.relayModal = data;
+  }
+
+  users()
   {
 
   }
 
   logout()
   {
-    this.loginService.logout();
+    this.userService.logout();
   }
 }

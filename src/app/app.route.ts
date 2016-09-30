@@ -5,6 +5,7 @@ import { provideRouter, RouterConfig } from '@angular/router';
 import { AppComponent } from './app.component'
 import  { RelayComponent } from  './relay'
 import  { LoginComponent } from  './login'
+import { UsersComponent } from "./users/users.component";
 
 const routes: RouterConfig = [
   {

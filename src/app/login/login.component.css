@@ -5,9 +5,15 @@
   padding: 30px;
 }
 
+#login div{
+  text-align: center;
+}
+
 #login h1{
+  font-size: 5rem;
   margin-top: 0;
   text-align: center;
+  color: #888;
 }
 
 #login label {
@@ -17,12 +23,4 @@
 
 #login input{
   margin: 10px auto;
-}
-
-#login button {
-  margin: 10px 0;
-  display: inherit;
-  width: 258px;
-  height: 35px;
-  padding: 5px;
 }

@@ -1,8 +1,8 @@
-import { Component, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { LoginService } from './login.service';
+import { Component } from '@angular/core';
+import { UserService } from './service/user.service';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-import { RelayService } from "./relay.service";
-import { TransferService } from "./transfer.service";
+import { RelayService } from "./service/relay.service";
+import { TransferService } from "./service/transfer.service";
 import { HTTP_PROVIDERS } from '@angular/http';
 
 @Component({
@@ -11,27 +11,8 @@ import { HTTP_PROVIDERS } from '@angular/http';
   templateUrl  : 'app.component.html',
   styleUrls    : ['app.component.css'],
   directives   : [ROUTER_DIRECTIVES ],
-  providers    : [LoginService, TransferService, RelayService, HTTP_PROVIDERS],
-  encapsulation: ViewEncapsulation.None
+  providers    : [UserService, TransferService, RelayService, HTTP_PROVIDERS],
 })
 export class AppComponent
 {
-  welcome = "Welcome";
-  username;
-  password;
-  error;
-
-  constructor(private _loginService:LoginService, private router:Router)
-  {
-  }
-
-  login()
-  {
-    this._loginService.login(this.username, this.password)
-  }
-
-  logout()
-  {
-    this._loginService.logout();
-  }
 }

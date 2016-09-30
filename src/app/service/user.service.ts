@@ -3,7 +3,7 @@ import { TransferService } from './transfer.service'
 import { Router } from "@angular/router";
 
 @Injectable()
-export class LoginService
+export class UserService
 {
 
   constructor(private transferService: TransferService, private router: Router)
@@ -20,8 +20,12 @@ export class LoginService
         username: username,
         password: password
       };
+    return this.transferService.postRequest(data,path, true);
+  }
 
-    this.transferService.postRequest(data,path, true);
+  addUser(user)
+  {
+
   }
 
   logout()

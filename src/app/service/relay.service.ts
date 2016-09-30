@@ -5,7 +5,7 @@ import { TransferService } from './transfer.service'
 export class RelayService
 {
 
-  constructor(private transferService:TransferService)
+constructor(private transferService:TransferService)
   {
   }
 
@@ -19,9 +19,9 @@ export class RelayService
   {
     var
       path  = '/set',
-      token = localStorage.getItem('token'),
+      token = TransferService.getToken('token'),
       data  = "relay=" + JSON.stringify(relays) + "&token=" + JSON.stringify(token);
 
-    this.transferService.postRequest(data, path, false)
+    return this.transferService.postRequest(data, path, false)
   }
 }

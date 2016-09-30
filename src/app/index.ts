@@ -1,6 +1,7 @@
 export * from './environment';
 export * from './app.component';
-export * from './login.service';
-export * from './relay.service';
-export * from './transfer.service';
+export * from './service/user.service';
+export * from './service/relay.service';
+export * from './service/transfer.service';
 export * from './relay/'
+// export * from './users/'
