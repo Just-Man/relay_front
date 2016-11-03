@@ -1,17 +1,19 @@
-body {
-  background: url("background.jpg") no-repeat;
-  background-size: 100% 120%;
+body
+{
+  background      : url("background.jpg") no-repeat center;
+  background-size : cover;
 }
 
-h2{
-  margin: 0;
-    display: block;
-    font-size: 1.5em;
-    -webkit-margin-before: 0.83em;
-    -webkit-margin-after: 0.83em;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    font-weight: bold;
+h2
+{
+  margin                : 0;
+  display               : block;
+  font-size             : 1.5em;
+  -webkit-margin-before : 0.83em;
+  -webkit-margin-after  : 0.83em;
+  -webkit-margin-start  : 0;
+  -webkit-margin-end    : 0;
+  font-weight           : bold;
 }
 
 #nav
@@ -32,13 +34,57 @@ h2{
 
 .navButton
 {
+  margin-right: 15px;
   float                 : right;
   padding               : 10px 20px;
-  border                : 1px solid #000;
-  -webkit-border-radius : 55px;
-  -moz-border-radius    : 5px;
-  border-radius         : 5px;
 }
+
+.error
+{
+  display               : block;
+  width                 : 80%;
+  min-height            : 400px;
+  text-align            : center;
+  vertical-align        : middle;
+  margin                : 200px auto;
+  background            : rgba(15, 15, 15, 0.50);
+  padding               : 10px;
+  border                : 2px solid #fff;
+  -webkit-border-radius : 15px;
+  -moz-border-radius    : 15px;
+  border-radius         : 15px;
+}
+
+.form{
+  width:260px;
+  background: rgba(254, 254, 255, 0.5);
+  margin: 300px auto;
+  padding: 30px;
+}
+
+.form div{
+  text-align: center;
+}
+
+.form h1{
+  font-size: 5rem;
+  margin-top: 0;
+  text-align: center;
+  color: #888;
+}
+
+.form label {
+  display: inline-block;
+  width: 120px;
+}
+
+.form input{
+  display: block;
+  width: 100%;
+  margin: 10px auto;
+
+}
+
 
 #relay_board
 {
@@ -72,14 +118,14 @@ h2{
 .titleEdit
 {
   max-width : 60%;
-  margin: 16px auto;
+  margin    : 16px auto;
 }
 
 .relayForm
 {
   text-align : center;
-  display: block;
-  height: 150px;
+  display    : block;
+  height     : 150px;
 }
 
 .openModal
@@ -193,6 +239,73 @@ label.form-control.label.label-default.pull-right.align-middle.input-sm
   box-shadow         : inset 0 0 0 1px #f5f7fa, 1px 1px 1px #c7ccd3;
 }
 
+#user_board
+{
+  margin                : 200px auto;
+  width                 : 50%;
+  background            : rgba(15, 15, 15, 0.50);
+  padding               : 10px;
+  display               : flex;
+  justify-content       : space-around;
+  flex-wrap             : wrap;
+  border                : 2px solid #fff;
+  -webkit-border-radius : 15px;
+  -moz-border-radius    : 15px;
+  border-radius         : 15px;
+}
+
+.userList
+{
+  margin-top: 20px;
+  padding: 5px;
+  background : #bbb;
+  -webkit-border-radius : 5px;
+  -moz-border-radius    : 5px;
+  border-radius         : 5px;
+}
+
+.userList > li
+{
+  color: #000;
+  background: linear-gradient(rgba(0,0,0,0.5) 0%, rgba(255,255,255,0.5), rgba(0,0,0,0.5));
+  border                : 1px solid #000;
+  -webkit-border-radius : 5px;
+  -moz-border-radius    : 5px;
+  border-radius         : 5px;
+  -webkit-box-shadow : inset 0 0 0 1px #f5f7fa, 1px 1px 1px #c7ccd3;
+  -moz-box-shadow    : inset 0 0 0 1px #f5f7fa, 1px 1px 1px #c7ccd3;
+  box-shadow         : inset 0 0 0 1px #f5f7fa, 1px 1px 1px #c7ccd3;
+}
+
+.userList > li:nth-child(1)
+{
+  background : #eee;
+  -webkit-border-radius : 5px 5px 0 0;
+  -moz-border-radius    : 5px 5px 0 0;
+  border-radius         : 5px 5px 0 0;
+}
+
+.userList > li:nth-child(2n)
+{
+  background : linear-gradient(rgba(255,255,255,0.5) 0%, rgba(0,0,0,0.5), rgba(255,255,255,0.5));
+}
+
+.userList p{
+  display: inline-block;
+}
+
+#account {
+  width: 260px;
+  background: rgba(254, 254, 255, 0.5);
+  margin: 300px auto;
+  padding: 30px;
+}
+
+#strengthBar
+{
+  height: 20px;
+  margin: -10px 0 0;
+}
 @media all and (max-width : 960px)
 {
 
@@ -201,23 +314,49 @@ label.form-control.label.label-default.pull-right.align-middle.input-sm
     max-width  : none;
     flex-basis : 45%;
   }
+
+  #user_board{
+    width: 90%;
+  }
 }
 
 @media all and (max-width : 550px)
 {
-  .col-xs-12{
-    padding-left: 0;
-    padding-right: 0;
+  .number{
+    display: none;
   }
 
-  .col-sm-4{
-    padding-left: 0;
-    padding-right: 0;
+  .col-xs-12
+  {
+    padding-left  : 0;
+    padding-right : 0;
+  }
+
+  .col-sm-4
+  {
+    padding-left  : 0;
+    padding-right : 0;
   }
 
   .relay
   {
     max-width  : none;
     flex-basis : 100%;
+  }
+}
+
+@media all and (max-width : 420px)
+{
+  .log
+  {
+    display : none;
+  }
+}
+
+@media all and (max-width : 360px)
+{
+  .form-control
+  {
+    padding: 8px 5px;
   }
 }

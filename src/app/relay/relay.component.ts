@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RelayService } from '../service/relay.service';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { UserService } from "../service/user.service";
+import { refresh } from "../globals"
+import { TransferService } from "../service/transfer.service";
+import { AppComponent } from "../app.component";
 
 @Component({
   moduleId   : module.id,
@@ -21,30 +24,49 @@ export class RelayComponent implements OnInit
   errorMsg;
   seconds;
 
-  constructor(private relaysService:RelayService,
-              private userService:UserService,
+  constructor(private app: AppComponent,
+    private relaysService:RelayService,
               private router:Router)
   {
   }
 
-  ngOnInit()
+  ngOnInit ()
   {
+    this.getRelaysStatus();
+  }
+
+  getRelaysStatus () {
     this.relaysService.getStatus()
       .subscribe(res =>
         {
-          this.relays   = res;
-          this.username = res.username;
-          this.is_admin = res.admin;
           if (res.error) {
             this.errorMsg = res.error;
-            var router    = this.router;
-            setTimeout(function ()
+            TransferService.closeAllModalIfError();
+            this.countDownTimer(refresh);
+
+            setTimeout(() =>
             {
-              router.navigate(['/']);
-            }, 10000)
+              this.router.navigate(['/']);
+            }, refresh * 1000)
           }
+          this.relays   = res;
         }
-      );
+      )
+    ;
+  }
+
+  countDownTimer(time)
+  {
+    if (time == 0) {
+      return
+    }
+
+    this.seconds = time;
+
+    setTimeout(() =>
+    {
+      this.countDownTimer(time - 1);
+    }, 1000);
   }
 
   changeRelayStatus(recipient)
@@ -54,6 +76,16 @@ export class RelayComponent implements OnInit
     this.relaysService.setRelay(recipient)
       .subscribe(res =>
       {
+        if (res.error) {
+          this.errorMsg = res.error;
+          TransferService.closeAllModalIfError();
+          this.countDownTimer(refresh);
+
+          setTimeout(() =>
+          {
+            this.router.navigate(['/']);
+          }, refresh * 1000)
+        }
       });
   }
 
@@ -62,22 +94,22 @@ export class RelayComponent implements OnInit
     this.relaysService.setRelay(recipient)
       .subscribe(res =>
       {
-        this.relays = res;
+        if (res.error) {
+          this.errorMsg = res.error;
+          TransferService.closeAllModalIfError();
+          this.countDownTimer(refresh);
+
+          setTimeout(() =>
+          {
+            this.router.navigate(['/']);
+          }, refresh * 1000)
+        }
+        // this.relays = res;
       });
   }
 
   openTimersModal(data)
   {
     this.relayModal = data;
-  }
-
-  users()
-  {
-
-  }
-
-  logout()
-  {
-    this.userService.logout();
   }
 }

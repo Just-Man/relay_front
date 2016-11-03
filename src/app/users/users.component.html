@@ -1,0 +1,88 @@
+<div *ngIf="errorMsg" class="error">
+  <p class="text-danger ui-state-error-text">
+    {{ errorMsg }} and you will be redirect  to home page for login again after {{seconds}}s.
+  </p>
+</div>
+<div id="user_board" *ngIf="!errorMsg" >
+      <div><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userModal">Add user</button></div>
+  <ul class="userList col-xs-12 col-md-12 col-lg-12">
+    <li class="form-control clearfix">
+      <span class="pull-left number">#</span>
+      <p class="col-xs-3 col-md-4 col-lg-4 text-center">Username</p>
+      <p class="col-xs-4 col-md-4 col-lg-4 text-center">E-mail</p>
+      <p class="pull-right">&nbsp;</p>
+    </li>
+    <li *ngFor="let  user of users" class="form-control clearfix">
+      <span class="pull-left number">{{user.user_id}}</span>
+      <p class="col-xs-3 col-md-3 col-lg-4" *ngIf="isEdit != user.user_id +'u'" (dblclick)="isEdit = user.user_id +'u'">
+        {{user.username}}
+      </p>
+      <input class="ol-xs-3 col-md-3 col-lg-4" *ngIf="isEdit == user.user_id + 'u' && loggedUser.is_admin == true" (keydown.enter)="isEdit=false; editUser(user)" type="text" [(ngModel)]="user.username">
+      <p class="col-xs-4 col-md-3 col-lg-4" *ngIf="isEdit != user.user_id + 'e'" (dblclick)="isEdit = user.user_id + 'e'">
+        {{user.email}}
+      </p>
+      <input *ngIf="isEdit == user.user_id + 'e' && loggedUser.is_admin == true" (keydown.enter)="isEdit=false; editUser(user)" type="text" [(ngModel)]="user.email">
+
+      <p  class="pull-right">
+        <button class="btn-info log" *ngIf="loggedUser.is_admin == true" (click)="getLog(user)">Log</button>
+        <button data-toggle="modal" data-target="#logModal"  id="openLogModal" hidden></button>
+        <button class="btn-danger" *ngIf="loggedUser.is_admin == true" (click)="deleteUser(user)">&times;</button>
+      </p>
+    </li>
+  </ul>
+</div>
+
+<!--log Modal-->
+<div *ngIf="logs" class="modal fade" id="logModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn closeBtn btn-danger pull-right" data-dismiss="modal">&times;</button>
+        <h4>Log of login</h4>
+      </div>
+      <div class="modal-body">
+        <ol>
+          <li *ngFor="let log of logs">
+            <span class="text-center text-info">{{ log.login_date }}</span>
+          </li>
+        </ol>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-info" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--User Modal-->
+<div class="modal fade" id="userModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn closeBtn btn-danger pull-right" data-dismiss="modal">&times;</button>
+        <h4>Add user</h4>
+      </div>
+      <div class="modal-body">
+        <form class="clearfix">
+          <div class="col-md-4 col-lg-4 col-xs-4">
+            <label class="form-control label align-middle label-default input-sm pull-right" for="username">Username</label>
+            <label class="form-control label align-middle label-default input-sm pull-right" for="email">E-mail</label>
+            <label class="form-control label align-middle label-default input-sm pull-right" for="admin">Admin rights</label>
+          </div>
+          <div class="col-md-8 col-lg-8 col-xs-8">
+          <input class="form-control input-sm" [(ngModel)]="newUser.username" id="username" type="text">
+          <input class="form-control input-sm" [(ngModel)]="newUser.email" id="email" type="text">
+          <input class="form-control input-sm" [(ngModel)]="newUser.is_admin" id="admin" type="checkbox">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default btn-success" data-dismiss="modal" (click)="saveUser(newUser)">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+

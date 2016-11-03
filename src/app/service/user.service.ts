@@ -10,28 +10,73 @@ export class UserService
   {
   }
 
+
+  path;
+  users;
+
   login (username, password)
   {
-
+    this.path = '/login';
     var
-      path = '/login',
       data =
       {
         username: username,
         password: password
       };
-    return this.transferService.postRequest(data,path, true);
+
+    return this.transferService.postRequest(data,this.path, true);
   }
 
-  addUser(user)
+  getUsers ()
   {
+    this.path = '/users';
+    return this.transferService.getRequest(this.path)
+  }
 
+  getUsersLog (user)
+  {
+    this.path = '/log';
+
+    var
+      token = TransferService.getFromStorage('token'),
+      data  = "user=" + JSON.stringify(user) + "&token=" + JSON.stringify(token);
+
+    return this.transferService.postRequest(data, this.path, false)
+  }
+
+  saveUser(user, path)
+  {
+    var
+      token = TransferService.getFromStorage('token'),
+      data  = "user=" + JSON.stringify(user) + "&token=" + JSON.stringify(token);
+
+    return this.transferService.postRequest(data,path, false);
+  }
+
+  deleteUser(user)
+  {
+    this.path = '/del';
+    var
+      token = TransferService.getFromStorage('token'),
+      data  = "user=" + JSON.stringify(user) + "&token=" + JSON.stringify(token);
+
+    return this.transferService.postRequest(data,this.path, false);
   }
 
   logout()
   {
-    localStorage.clear();
+    this.path = '/logout';
+
+    var
+      token = TransferService.getFromStorage('token'),
+      data  = "token=" + JSON.stringify(token);
+
+    TransferService.saveToStorage('token', '');
+
+    TransferService.saveToStorage('user', '');
     this.router.navigate(['/']);
+
+    return this.transferService.postRequest(data, this.path, false);
   }
 
 }

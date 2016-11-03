@@ -1,21 +1,22 @@
 /**
  * Created by just on 19.09.16.
  */
-import { Injectable }     from '@angular/core';
+import { Injectable, EventEmitter }     from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from "rxjs/Rx";
 import globals = require('../globals');
 import 'rxjs/add/operator/map'
 import 'rxjs/Rx'
+import { Router } from "@angular/router";
 
 @Injectable()
 
 export class TransferService
 {
-
+  loginEvent: EventEmitter<any> = new EventEmitter;
   status;
 
-  constructor(private http:Http)
+  constructor(private http:Http, private router: Router)
   {
   }
 
@@ -40,15 +41,21 @@ export class TransferService
       .map((result) =>
       {
         if (save && result.token) {
-          TransferService.saveToken('token', JSON.stringify(result.token));
+          TransferService.saveToStorage('token', JSON.stringify(result.token));
         }
+
+        if (result.user) {
+          TransferService.saveToStorage('user', JSON.stringify(result.user));
+        }
+
+        this.loginEvent.emit(JSON.parse(TransferService.getFromStorage('user')));
 
         return result
       })
       .catch(TransferService.handleError)
   }
 
-  static saveToken(key, value)
+  static saveToStorage(key, value)
   {
     try {
       localStorage.setItem(key, value);
@@ -58,7 +65,7 @@ export class TransferService
     }
   }
 
-  static getToken(key)
+  static getFromStorage(key)
   {
     return localStorage.getItem(key) ?
       localStorage.getItem(key) :
@@ -69,10 +76,8 @@ export class TransferService
   {
     var
       url,
-      token   = TransferService.getToken('token'),
+      token   = TransferService.getFromStorage('token'),
       headers = new Headers();
-
-    console.log(token);
 
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Accept', 'q=0.8;application/json;q=0.9');
@@ -105,13 +110,27 @@ export class TransferService
             relay = [];
           }
 
-          resultArray['username'] = result.user[1];
-          resultArray['admin']    = result.user[2];
+          resultArray['user'] = JSON.parse(TransferService.getFromStorage('user'));
+
+          this.loginEvent.emit(resultArray['user']);
+
           return resultArray;
         }
         return result;
       })
       .catch(TransferService.handleError);
+  }
+
+  static closeAllModalIfError () {
+    var
+      i,
+      button,
+      closeButtons = document.getElementsByClassName('closeBtn'),
+      len = closeButtons.length;
+    for (i = 0; i < len; i += 1) {
+      button = closeButtons[i];
+      button.click();
+    }
   }
 
   private static handleError(error)
@@ -121,4 +140,8 @@ export class TransferService
     return Observable.throw(error.error || 'Server error');
   }
 
+  getLoginEvent ()
+  {
+    return this.loginEvent;
+  }
 }

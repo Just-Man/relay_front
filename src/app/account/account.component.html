@@ -1,0 +1,11 @@
+<app-account>
+  <div class="form">
+      <p *ngIf="error" class="text-danger">{{error}}</p>
+        <div  *ngFor="let field of fields">
+          <label [attr.for]="field.name">{{ field.label }}</label>
+          <input [type]="field.type" [id]="field.name" [name]="field.name" [(ngModel)]="field.value" (ngModelChange)="validateUserData()">
+          <p *ngIf="field.name == 'pass'" [style.width]="score+'%'" [style.background]="bgcolor" id="strengthBar"></p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" (click)="save()">Save</button>
+  </div>
+</app-account>

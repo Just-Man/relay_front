@@ -1,10 +1,9 @@
 <app-login>
-  <div id="login">
+  <div class="form">
     <h1>
       {{welcome}}
     </h1>
     <p *ngIf="error" class="text-danger">{{error}}</p>
-    <form (submit)="login()" method="post" >
       <div>
         <label for="username">Username</label>
         <input id="username" [(ngModel)]="username" name="username" type="text">
@@ -13,7 +12,7 @@
         <label for="password">Password</label>
         <input id="password" [(ngModel)]="password" name="password" type="password">
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Log in</button>
-    </form>
+      <button type="submit" class="btn btn-primary btn-block" (click)="login()">Log in</button>
   </div>
+  <p><a href=""></a></p>
 </app-login>

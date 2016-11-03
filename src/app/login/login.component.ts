@@ -13,7 +13,7 @@ import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 export class LoginComponent
 {
   welcome = "Welcome";
- 
+
   username;
   password;
   error;
